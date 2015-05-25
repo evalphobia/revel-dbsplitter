@@ -2,7 +2,9 @@ package dbsplitter
 
 import (
 	"fmt"
+
 	"github.com/go-xorm/xorm"
+	"github.com/go-xorm/core"
 )
 
 type DbSplitterXorm struct{}
@@ -22,6 +24,7 @@ func (d *DbSplitterXorm) getEngine(params map[string]string) *xorm.Engine {
 	if err != nil {
 		panic("cannot get engines. params=" + dsn)
 	}
+	db.SetMapper(core.NewCacheMapper(new(core.GonicMapper)))
 	return db
 }
 
